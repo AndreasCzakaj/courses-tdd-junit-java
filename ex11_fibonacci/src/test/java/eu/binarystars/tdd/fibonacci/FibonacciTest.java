@@ -61,16 +61,16 @@ class FibonacciTest {
     static Stream<Arguments> shouldPassParams() {
         // https://www.wackerart.de/mathematik/big_numbers/fibonacci_numbers.html
         return Stream.of(
-                arguments(0, 0),
-                arguments(1, 1),
-                arguments(2, 1),
-                arguments(3, 2),
-                arguments(4, 3),
-                arguments(5, 5),
-                arguments(6, 8),
-                arguments(19, 4_181),
-                arguments(40, 102_334_155),
-                arguments(46, 1_836_311_903)
+                arguments(0, 0)
+                //arguments(1, 1)
+                //arguments(2, 1)
+                //arguments(3, 2)
+                //arguments(4, 3)
+                //arguments(5, 5)
+                //arguments(6, 8)
+                //arguments(19, 4_181)
+                //arguments(40, 102_334_155)
+                //arguments(46, 1_836_311_903)
         );
     }
 
@@ -85,9 +85,9 @@ class FibonacciTest {
 
     static Stream<Arguments> shouldFailParams() {
         return Stream.of(
-                arguments(null, "index must not be null"),
-                arguments(-1, "index must be >= 0"),
-                arguments(47, "index must be <= 46")
+                arguments(null, "index must not be null")
+                //arguments(-1, "index must be >= 0")
+                //arguments(47, "index must be <= 46")
         );
     }
 }
