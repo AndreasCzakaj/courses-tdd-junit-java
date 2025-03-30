@@ -27,7 +27,7 @@ class FibonacciTest {
     }
 
     @Test
-    //@org.junit.jupiter.api.Disabled
+    @org.junit.jupiter.api.Disabled
     void itShouldYield0For0() {
         // given
         Integer index = 0;
