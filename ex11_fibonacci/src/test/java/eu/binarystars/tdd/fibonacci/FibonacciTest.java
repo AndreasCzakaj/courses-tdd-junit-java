@@ -17,13 +17,17 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 class FibonacciTest {
     Fibonacci fibonacci;
 
+    Fibonacci factory() {
+        return new Fibonacci();
+    }
+
     @BeforeEach
     void beforeEach() {
-        fibonacci = new Fibonacci();
+        fibonacci = factory();
     }
 
     @Test
-    @org.junit.jupiter.api.Disabled
+    //@org.junit.jupiter.api.Disabled
     void itShouldYield0For0() {
         // given
         Integer index = 0;
