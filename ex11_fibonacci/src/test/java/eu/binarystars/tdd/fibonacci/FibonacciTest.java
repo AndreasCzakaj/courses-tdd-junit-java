@@ -2,6 +2,7 @@ package eu.binarystars.tdd.fibonacci;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,7 +39,7 @@ public class FibonacciTest {
     // see https://www.wackerart.de/mathematik/big_numbers/fibonacci_numbers.html
 
     @Test
-    @Disabled
+    @DisplayName("it should yield 0 for index 0")
     void itShouldYield0ForIndex0() {
         fail("impl me");
     }
