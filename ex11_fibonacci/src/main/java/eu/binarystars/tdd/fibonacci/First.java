@@ -14,7 +14,7 @@ public class First {
         return "andreas.czakaj@binary-stars.eu";
     }
 
-    public Collection getList() {
+    public Collection<String> getList() {
         return List.of("a", "b", "c");
     }
 
@@ -28,6 +28,6 @@ public class First {
     }
 
     public Person getPerson() {
-        throw new RuntimeException("oops");
+        throw new NullPointerException("oops");
     }
 }
