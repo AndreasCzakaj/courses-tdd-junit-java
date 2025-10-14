@@ -20,7 +20,7 @@ public class GenericDaoThrowingImplTest {
     @Test
     void itShouldThrowForSave() {
         dao = new GenericDaoThrowingImpl<>();
-        assertThatThrownBy(() -> dao.save(new Book(), "123"))
+        assertThatThrownBy(() -> dao.save(new Book()))
                 .isInstanceOf(DaoException.class)
                 .hasMessage("save: oops")
                 .hasNoCause();

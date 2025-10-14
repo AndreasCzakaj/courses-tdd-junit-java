@@ -11,7 +11,7 @@ public class GenericDaoThrowingImpl<I, E> implements GenericDao<I, E> {
     }
 
     @Override
-    public E save(final E entity, final I key) throws DaoException {
+    public E save(final E entity) throws DaoException {
         throw new DaoException("save: oops");
     }
 }
