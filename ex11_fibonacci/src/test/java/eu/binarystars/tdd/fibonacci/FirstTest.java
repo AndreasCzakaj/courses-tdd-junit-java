@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.*;
 class FirstTest {
 
     @Test
-    void init() throws Exception{
+    void getEmail() throws Exception{
         // given
         First first = new First();
 
@@ -18,7 +18,6 @@ class FirstTest {
         String actual = first.getEmail();
 
         // then
-        Person expected = new Person();
         assertThat(actual).isNull();
     }
 }

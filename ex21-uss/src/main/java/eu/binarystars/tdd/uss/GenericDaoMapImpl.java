@@ -6,16 +6,24 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class GenericDaoMapImpl<I, E> implements GenericDao<I, E> {
-    public final Map<String, E> repo = new HashMap<>();
+
+    public GenericDaoMapImpl(Function <E, I> keyProvider) {
+        this.keyProvider = keyProvider;
+    }
+
+    Function <E, I> keyProvider;
+
+    public final Map<I, E> repo = new HashMap<>();
 
     @Override
-    public Optional<E> get(final I uid)  throws DaoException {
-        return Optional.ofNullable(repo.get(uid.toString()));
+    public Optional<E> get(final I key)  throws DaoException {
+        return Optional.ofNullable(repo.get(key));
     }
 
     @Override
-    public E save(final E entity, final I key) throws DaoException {
-        repo.put(key.toString(), entity);
+    public E save(final E entity) throws DaoException {
+        I key = keyProvider.apply(entity);
+        repo.put(key, entity);
         return entity;
     }
 }
