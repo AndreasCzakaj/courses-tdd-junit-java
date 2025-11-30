@@ -16,6 +16,6 @@ public class UuidGeneratorNaiveRandomImpl implements UuidGenerator {
     }
 
     String createOne() {
-        return Integer.toHexString(RANDOM.nextInt(15));
+        return Integer.toHexString(RANDOM.nextInt(16));
     }
 }

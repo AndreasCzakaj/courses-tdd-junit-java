@@ -33,9 +33,9 @@ class UuidGeneratorTest {
 
     @Test
     void shouldUseAllChars() {
-        var hexChars = new ArrayList<>(){{
-            IntStream.range(0, 15).forEach(i ->add(Integer.toHexString(i)));
-        }}.toArray(new String[0]);
+        String[] hexChars = new String[]{
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"
+        };
         var foundChars = new HashMap<String, Integer>();
 
         UuidGenerator uuidGenerator = new UuidGeneratorNaiveRandomImpl();
