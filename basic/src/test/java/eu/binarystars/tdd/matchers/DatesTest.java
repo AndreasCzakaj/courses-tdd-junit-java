@@ -1,10 +1,15 @@
 package eu.binarystars.tdd.matchers;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
+
+import static java.time.Month.MARCH;
+import static java.time.Month.MAY;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 class DatesTest {
     Dates sut;
@@ -28,138 +33,154 @@ class DatesTest {
 
     // LocalDate assertions
     @Test
-    @Disabled("birthday should be 1990-05-15")
     void shouldBe_1990_05_15() {
+        assertThat(birthday).isEqualTo(LocalDate.of(1990, 5, 15));
     }
 
     @Test
-    @Disabled("birthday should be before today")
     void shouldBeBeforeToday() {
+        assertThat(birthday).isBefore(LocalDate.now());
     }
 
     @Test
-    @Disabled("birthday should be after 1980-01-01")
     void shouldBeAfter_1980_01_01() {
+        assertThat(birthday).isAfter(LocalDate.of(1980, 1, 1));
     }
 
     @Test
-    @Disabled("birthday should be in May")
     void shouldBeInMay() {
+        assertThat(birthday).hasMonth(MAY);
     }
 
     @Test
-    @Disabled("birthday should be in year 1990")
     void shouldBeInYear1990() {
+        assertThat(birthday).hasYear(1990);
     }
 
     @Test
-    @Disabled("birthday should be on day 15")
     void shouldBeOnDay15() {
+        assertThat(birthday).hasDayOfMonth(15);
     }
 
     @Test
-    @Disabled("project deadline should be in the future compared to 2024-01-01")
     void projectDeadlineShouldBeInFuture() {
+        assertThat(projectDeadline).isAfter(LocalDate.of(2024, 1, 1));
     }
 
     @Test
-    @Disabled("project deadline should be between 2024-01-01 and 2025-12-31")
     void projectDeadlineShouldBeBetweenDates() {
+        assertThat(projectDeadline)
+                .isBetween(LocalDate.of(2024, 1, 1), LocalDate.of(2025, 12, 31));
     }
 
     // LocalDateTime assertions
     @Test
-    @Disabled("meeting time should be 2024-03-20T14:30:00")
     void meetingTimeShouldBe_2024_03_20_at_14_30() {
+        assertThat(meetingTime).isEqualTo(LocalDateTime.of(2024, 3, 20, 14, 30, 0));
     }
 
     @Test
-    @Disabled("meeting time should be before now")
     void meetingTimeShouldBeBeforeNow() {
+        assertThat(meetingTime).isBefore(LocalDateTime.now());
     }
 
     @Test
-    @Disabled("meeting time should have hour 14")
     void meetingTimeShouldHaveHour14() {
+        assertThat(meetingTime).hasHour(14);
     }
 
     @Test
-    @Disabled("meeting time should have minute 30")
     void meetingTimeShouldHaveMinute30() {
+        assertThat(meetingTime).hasMinute(30);
     }
 
     @Test
-    @Disabled("meeting time should be in March 2024")
     void meetingTimeShouldBeInMarch2024() {
+        assertThat(meetingTime)
+                .hasMonth(MARCH)
+                .hasYear(2024);
     }
 
     // LocalTime assertions
     @Test
-    @Disabled("work start should be 09:00")
     void workStartShouldBe_09_00() {
+        assertThat(workStart).isEqualTo(LocalTime.of(9, 0));
     }
 
     @Test
-    @Disabled("work start should be before noon (12:00)")
     void workStartShouldBeBeforeNoon() {
+        assertThat(workStart).isBefore(LocalTime.NOON);
     }
 
     @Test
-    @Disabled("work start should have hour 9")
     void workStartShouldHaveHour9() {
+        assertThat(workStart).hasHour(9);
     }
 
     @Test
-    @Disabled("work start should be between 08:00 and 10:00")
     void workStartShouldBeBetween_08_and_10() {
+        assertThat(workStart)
+                .isBetween(LocalTime.of(8, 0), LocalTime.of(10, 0));
     }
 
     // ZonedDateTime assertions
     @Test
-    @Disabled("conference start should be in Europe/Berlin timezone")
     void conferenceStartShouldBeInBerlinTimezone() {
+        assertThat(conferenceStart.getZone()).isEqualTo(ZoneId.of("Europe/Berlin"));
     }
 
     @Test
-    @Disabled("conference start should be 2024-06-01T09:00 in Berlin")
     void conferenceStartShouldBeCorrectDateTime() {
+        assertThat(conferenceStart)
+                .isEqualTo(ZonedDateTime.of(2024, 6, 1, 9, 0, 0, 0, ZoneId.of("Europe/Berlin")));
     }
 
     @Test
-    @Disabled("conference start should have zone offset +01:00 or +02:00")
     void conferenceStartShouldHaveEuropeanOffset() {
+        assertThat(conferenceStart.getOffset())
+                .isIn(ZoneOffset.of("+01:00"), ZoneOffset.of("+02:00"));
     }
 
     // Instant assertions
     @Test
-    @Disabled("event timestamp should be 2024-01-15T10:30:00Z")
     void eventTimestampShouldBeCorrect() {
+        assertThat(eventTimestamp).isEqualTo(Instant.parse("2024-01-15T10:30:00Z"));
     }
 
     @Test
-    @Disabled("event timestamp should be before Instant.now()")
     void eventTimestampShouldBeInPast() {
+        assertThat(eventTimestamp).isBefore(Instant.now());
     }
 
     @Test
-    @Disabled("event timestamp should be close to 2024-01-15T10:30:00Z within 1 second")
     void eventTimestampShouldBeCloseToExpected() {
+        assertThat(eventTimestamp)
+                .isCloseTo(Instant.parse("2024-01-15T10:30:00Z"), within(1, ChronoUnit.SECONDS));
     }
 
     // Advanced: Period and Duration
     @Test
-    @Disabled("birthday should be more than 30 years before today")
     void birthdayShouldBeMoreThan30YearsAgo() {
+        assertThat(birthday)
+                .isBefore(LocalDate.now().minusYears(30));
     }
 
     @Test
-    @Disabled("meeting time should be at least 2 hours duration from 12:00 same day")
     void meetingShouldBeAtLeast2HoursAfterNoon() {
+        LocalDateTime noon = meetingTime.withHour(12).withMinute(0).withSecond(0);
+        Duration duration = Duration.between(noon, meetingTime);
+        assertThat(duration).isGreaterThanOrEqualTo(Duration.ofHours(2));
     }
 
     // Combined assertions
     @Test
-    @Disabled("TODO: combine multiple date assertions in one test")
     void shouldCombineMultipleDateAssertions() {
+        assertThat(birthday)
+                .isEqualTo(LocalDate.of(1990, 5, 15))
+                .isBefore(LocalDate.now())
+                .isAfter(LocalDate.of(1980, 1, 1))
+                .hasYear(1990)
+                .hasMonth(MAY)
+                .hasDayOfMonth(15);
     }
 }
