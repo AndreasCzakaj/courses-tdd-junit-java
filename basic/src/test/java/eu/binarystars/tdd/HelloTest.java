@@ -1,0 +1,29 @@
+package eu.binarystars.tdd;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class HelloTest {
+    Hello sut;
+
+    @BeforeEach
+    void beforeEach() {
+        sut = new Hello();
+    }
+
+    @Test
+    @DisplayName("It should yield 42 for the ultimate question")
+    void init() {
+        // given
+        var input = "What is the answer to the Ultimate Question of Life, the Universe, and Everything?";
+
+        // when
+        var actual = sut.answer(input);
+
+        // then        
+        assertThat(actual).as("it should be as Douglas Adams said").isEqualTo(42);
+    }
+}
