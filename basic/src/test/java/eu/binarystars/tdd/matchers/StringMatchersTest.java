@@ -19,37 +19,42 @@ class StringMatchersTest {
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should not be null")
     void shouldNotBeNull() throws Exception{
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should be andreas.czakaj@binary-stars.eu")
     void shouldBeAndreasCzakaj() throws Exception{
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should start with 'andreas'")
     void shouldStartWith_andreas() throws Exception{
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should end with '.eu'")
     void shouldEndWith_dot_eu() throws Exception{
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should not end with '.com'")
     void shouldNotEndWith_dot_com() throws Exception{
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should contain 'binary'")
     void shouldContain_binary() throws Exception{
     }
 
     @Test
-    @Disabled("TODO")
+    @Disabled("email should contain 'andreas' and 'stars'")
+    void shouldContain_andreas_and_stars() throws Exception{
+    }
+
+    @Test
+    @Disabled("email should match regular expression '[a-z.@\\-]+'")
     void shouldMatch_regex() throws Exception{
     }
 

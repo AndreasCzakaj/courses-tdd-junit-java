@@ -21,6 +21,7 @@ public class FibonacciTest {
     // see https://www.wackerart.de/mathematik/big_numbers/fibonacci_numbers.html
 
     @Test
+    @Disabled("impl me")
     @DisplayName("it should yield 0 for index 0")
     void itShouldYield0ForIndex0() {
         fail("impl me");
