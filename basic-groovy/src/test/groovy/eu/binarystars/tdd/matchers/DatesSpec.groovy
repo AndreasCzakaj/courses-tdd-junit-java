@@ -1,9 +1,9 @@
 package eu.binarystars.tdd.matchers
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import java.time.*
+import java.time.temporal.ChronoUnit
 
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.within
@@ -30,145 +30,243 @@ class DatesSpec extends Specification {
 
     // LocalDate assertions
 
-    @Ignore("birthday should be 1990-05-15")
-    def "should be 1990-05-15"() {
-        expect: true
+    def "birthday should be 1990-05-15"() {
+        when:
+        assertThat(birthday).isEqualTo(LocalDate.of(1990, 5, 15))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("birthday should be before today")
-    def "should be before today"() {
-        expect: true
+    def "birthday should be before today"() {
+        when:
+        assertThat(birthday).isBefore(LocalDate.now())
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("birthday should be after 1980-01-01")
-    def "should be after 1980-01-01"() {
-        expect: true
+    def "birthday should be after 1980-01-01"() {
+        when:
+        assertThat(birthday).isAfter(LocalDate.of(1980, 1, 1))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("birthday should be in May")
-    def "should be in May"() {
-        expect: true
+    def "birthday should be in May"() {
+        when:
+        assertThat(birthday).hasMonth(Month.MAY)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("birthday should be in year 1990")
-    def "should be in year 1990"() {
-        expect: true
+    def "birthday should be in year 1990"() {
+        when:
+        assertThat(birthday).hasYear(1990)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("birthday should be on day 15")
-    def "should be on day 15"() {
-        expect: true
+    def "birthday should be on day 15"() {
+        when:
+        assertThat(birthday).hasDayOfMonth(15)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("project deadline should be in the future compared to 2024-01-01")
-    def "project deadline should be in future"() {
-        expect: true
+    def "project deadline should be in future compared to 2024-01-01"() {
+        when:
+        assertThat(projectDeadline).isAfter(LocalDate.of(2024, 1, 1))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("project deadline should be between 2024-01-01 and 2025-12-31")
-    def "project deadline should be between dates"() {
-        expect: true
+    def "project deadline should be between 2024-01-01 and 2025-12-31"() {
+        when:
+        assertThat(projectDeadline)
+            .isAfterOrEqualTo(LocalDate.of(2024, 1, 1))
+            .isBeforeOrEqualTo(LocalDate.of(2025, 12, 31))
+
+        then:
+        noExceptionThrown()
     }
 
     // LocalDateTime assertions
 
-    @Ignore("meeting time should be 2024-03-20T14:30:00")
     def "meeting time should be 2024-03-20 at 14:30"() {
-        expect: true
+        when:
+        assertThat(meetingTime).isEqualTo(LocalDateTime.of(2024, 3, 20, 14, 30, 0))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("meeting time should be before now")
     def "meeting time should be before now"() {
-        expect: true
+        when:
+        assertThat(meetingTime).isBefore(LocalDateTime.now())
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("meeting time should have hour 14")
     def "meeting time should have hour 14"() {
-        expect: true
+        when:
+        assertThat(meetingTime).hasHour(14)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("meeting time should have minute 30")
     def "meeting time should have minute 30"() {
-        expect: true
+        when:
+        assertThat(meetingTime).hasMinute(30)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("meeting time should be in March 2024")
     def "meeting time should be in March 2024"() {
-        expect: true
+        when:
+        assertThat(meetingTime)
+            .hasMonth(Month.MARCH)
+            .hasYear(2024)
+
+        then:
+        noExceptionThrown()
     }
 
     // LocalTime assertions
 
-    @Ignore("work start should be 09:00")
     def "work start should be 09:00"() {
-        expect: true
+        when:
+        assertThat(workStart).isEqualTo(LocalTime.of(9, 0))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("work start should be before noon (12:00)")
     def "work start should be before noon"() {
-        expect: true
+        when:
+        assertThat(workStart).isBefore(LocalTime.NOON)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("work start should have hour 9")
     def "work start should have hour 9"() {
-        expect: true
+        when:
+        assertThat(workStart).hasHour(9)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("work start should be between 08:00 and 10:00")
     def "work start should be between 08:00 and 10:00"() {
-        expect: true
+        when:
+        assertThat(workStart)
+            .isAfterOrEqualTo(LocalTime.of(8, 0))
+            .isBeforeOrEqualTo(LocalTime.of(10, 0))
+
+        then:
+        noExceptionThrown()
     }
 
     // ZonedDateTime assertions
 
-    @Ignore("conference start should be in Europe/Berlin timezone")
     def "conference start should be in Europe/Berlin timezone"() {
-        expect: true
+        when:
+        assertThat(conferenceStart.zone).isEqualTo(ZoneId.of("Europe/Berlin"))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("conference start should be 2024-06-01T09:00 in Berlin")
     def "conference start should be correct date-time"() {
-        expect: true
+        when:
+        assertThat(conferenceStart.toLocalDateTime())
+            .hasYear(2024)
+            .hasMonth(Month.JUNE)
+            .hasDayOfMonth(1)
+            .hasHour(9)
+            .hasMinute(0)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("conference start should have zone offset +01:00 or +02:00")
     def "conference start should have European offset"() {
-        expect: true
+        when:
+        assertThat(conferenceStart.offset.id).isIn("+01:00", "+02:00")
+
+        then:
+        noExceptionThrown()
     }
 
     // Instant assertions
 
-    @Ignore("event timestamp should be 2024-01-15T10:30:00Z")
     def "event timestamp should be correct"() {
-        expect: true
+        when:
+        assertThat(eventTimestamp).isEqualTo(Instant.parse("2024-01-15T10:30:00Z"))
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("event timestamp should be before Instant.now()")
     def "event timestamp should be in past"() {
-        expect: true
+        when:
+        assertThat(eventTimestamp).isBefore(Instant.now())
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("event timestamp should be close to 2024-01-15T10:30:00Z within 1 second")
-    def "event timestamp should be close to expected"() {
-        expect: true
+    def "event timestamp should be close to expected within 1 second"() {
+        when:
+        assertThat(eventTimestamp)
+            .isCloseTo(Instant.parse("2024-01-15T10:30:00Z"), within(1, ChronoUnit.SECONDS))
+
+        then:
+        noExceptionThrown()
     }
 
     // Advanced: Period and Duration
 
-    @Ignore("birthday should be more than 30 years before today")
     def "birthday should be more than 30 years ago"() {
-        expect: true
+        given:
+        def period = Period.between(birthday, LocalDate.now())
+
+        when:
+        assertThat(period.years).isGreaterThan(30)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("meeting time should be at least 2 hours duration from 12:00 same day")
     def "meeting should be at least 2 hours after noon"() {
-        expect: true
+        given:
+        def noon = meetingTime.toLocalDate().atTime(LocalTime.NOON)
+
+        expect:
+        Duration.between(noon, meetingTime).toHours() >= 2
     }
 
     // Combined assertions
 
-    @Ignore("TODO: combine multiple date assertions in one test")
     def "should combine multiple date assertions"() {
-        expect: true
+        when:
+        assertThat(birthday)
+            .hasYear(1990)
+            .hasMonth(Month.MAY)
+            .hasDayOfMonth(15)
+            .isBefore(LocalDate.now())
+            .isAfter(LocalDate.of(1980, 1, 1))
+
+        then:
+        noExceptionThrown()
     }
 }

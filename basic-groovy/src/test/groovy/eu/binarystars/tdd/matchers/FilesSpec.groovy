@@ -1,7 +1,6 @@
 package eu.binarystars.tdd.matchers
 
 import org.apache.commons.io.IOUtils
-import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.TempDir
 
@@ -28,11 +27,14 @@ class FilesSpec extends Specification {
         Files.write(newFile.toPath(), lines, StandardCharsets.UTF_8)
     }
 
-    @Ignore
     def "txt file should exist and contain first and second line"() {
-        // "The first line"
-        // "The second line"
-        expect: true
+        when:
+        assertThat(newFile).exists()
+        assertThat(Files.readAllLines(newFile.toPath(), StandardCharsets.UTF_8))
+            .containsExactly("The first line", "The second line")
+
+        then:
+        noExceptionThrown()
     }
 
     def "json file should contain 1000 entries"() {
@@ -41,7 +43,10 @@ class FilesSpec extends Specification {
         def file = new File(url.getFile())
         def json = Files.readString(file.toPath(), StandardCharsets.UTF_8)
 
-        expect:
+        when:
         assertThatJson(json).isArray().hasSize(1000)
+
+        then:
+        noExceptionThrown()
     }
 }

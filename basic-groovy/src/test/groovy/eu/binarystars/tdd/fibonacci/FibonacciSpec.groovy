@@ -1,84 +1,45 @@
 package eu.binarystars.tdd.fibonacci
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 class FibonacciSpec extends Specification {
 
     // see https://www.wackerart.de/mathematik/big_numbers/fibonacci_numbers.html
 
-    @Ignore("impl me")
-    def "it should yield 0 for index 0"() {
-        expect: true
+    def "it should calculate fibonacci correctly for index #index"() {
+        given:
+        def sut = new Fibonacci()
+
+        expect:
+        sut.calc(index) == expected
+
+        where:
+        index | expected
+        0     | 0
+        1     | 1
+        2     | 1
+        3     | 2
+        4     | 3
+        5     | 5
+        6     | 8
+        10    | 55
+        20    | 6_765
+        30    | 832_040
+        40    | 102_334_155
+        46    | 1_836_311_903
     }
 
-    @Ignore
-    def "it should throw for null index"() {
-        expect: true
-    }
+    def "it should throw IllegalArgumentException for invalid index #index"() {
+        given:
+        def sut = new Fibonacci()
 
-    @Ignore
-    def "it should throw for negative index"() {
-        expect: true
-    }
+        when:
+        sut.calc(index)
 
-    @Ignore
-    def "it should throw for index above 46"() {
-        expect: true
-    }
+        then:
+        thrown(IllegalArgumentException)
 
-    @Ignore
-    def "it should yield 1 for index 1"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 1 for index 2"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 2 for index 3"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 3 for index 4"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 5 for index 5"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 8 for index 6"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 55 for index 10"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 6_765 for index 20"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 832_040 for index 30"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 102_334_155 for index 40"() {
-        expect: true
-    }
-
-    @Ignore
-    def "it should yield 1_836_311_903 for index 46"() {
-        expect: true
+        where:
+        index << [-1, 47, null]
     }
 }

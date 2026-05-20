@@ -1,6 +1,5 @@
 package eu.binarystars.tdd.matchers
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -17,38 +16,68 @@ class CollectionMatchersSpec extends Specification {
         map = first.map
     }
 
-    @Ignore
     def "should contain 3 elements"() {
-        expect: true
+        when:
+        assertThat(list).hasSize(3)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "should contain 'a'"() {
-        expect: true
+        when:
+        assertThat(list).contains("a")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "should not contain 'd'"() {
-        expect: true
+        when:
+        assertThat(list).doesNotContain("d")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "should contain 'c' and 'a'"() {
-        expect: true
+        when:
+        assertThat(list).contains("c", "a")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "should not contain duplicates"() {
-        expect: true
+        when:
+        assertThat(list).doesNotHaveDuplicates()
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "more"() {
-        expect: true
+        when:
+        assertThat(list)
+            .hasSize(3)
+            .containsExactly("a", "b", "c")
+            .doesNotContain("d")
+            .doesNotHaveDuplicates()
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "map"() {
-        expect: true
+        when:
+        assertThat(map)
+            .hasSize(2)
+            .containsKey("k1")
+            .containsEntry("k1", "v1")
+            .containsEntry("k2", "v2")
+            .doesNotContainKey("k3")
+
+        then:
+        noExceptionThrown()
     }
 }

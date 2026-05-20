@@ -1,6 +1,5 @@
 package eu.binarystars.tdd.matchers
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -15,48 +14,82 @@ class StringMatchersSpec extends Specification {
         email = first.getEmail()
     }
 
-    @Ignore("email should not be null")
     def "should not be null"() {
-        expect: true
+        when:
+        assertThat(email).isNotNull()
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should be andreas.czakaj@binary-stars.eu")
     def "should be andreas.czakaj@binary-stars.eu"() {
-        expect: true
+        when:
+        assertThat(email).isEqualTo("andreas.czakaj@binary-stars.eu")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should start with 'andreas'")
     def "should start with 'andreas'"() {
-        expect: true
+        when:
+        assertThat(email).startsWith("andreas")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should end with '.eu'")
     def "should end with '.eu'"() {
-        expect: true
+        when:
+        assertThat(email).endsWith(".eu")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should not end with '.com'")
     def "should not end with '.com'"() {
-        expect: true
+        when:
+        assertThat(email).doesNotEndWith(".com")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should contain 'binary'")
     def "should contain 'binary'"() {
-        expect: true
+        when:
+        assertThat(email).contains("binary")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should contain 'andreas' and 'stars'")
     def "should contain 'andreas' and 'stars'"() {
-        expect: true
+        when:
+        assertThat(email).contains("andreas").contains("stars")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("email should match regular expression '[a-z.@\\-]+'")
     def "should match regex"() {
-        expect: true
+        when:
+        assertThat(email).matches("[a-z.@\\-]+")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore("TODO")
     def "should match all in one"() {
-        expect: true
+        when:
+        assertThat(email)
+            .isNotNull()
+            .isEqualTo("andreas.czakaj@binary-stars.eu")
+            .startsWith("andreas")
+            .endsWith(".eu")
+            .doesNotEndWith(".com")
+            .contains("binary", "andreas", "stars")
+            .matches("[a-z.@\\-]+")
+
+        then:
+        noExceptionThrown()
     }
 }

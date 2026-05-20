@@ -1,10 +1,8 @@
 package eu.binarystars.tdd.matchers
 
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static org.assertj.core.api.Assertions.assertThat
-import static org.assertj.core.api.Assertions.assertThatThrownBy
 
 class ObjectMatchersSpec extends Specification {
 
@@ -18,36 +16,58 @@ class ObjectMatchersSpec extends Specification {
         firstPerson = people[0]
     }
 
-    @Ignore
     def "people should contain 1000 people"() {
-        expect: true
+        when:
+        assertThat(people).hasSize(1000)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "test first person"() {
-        given:
-        def expected = new Person(id: 1, firstName: "Skippy", lastName: "Rayne",
-                email: "srayne0@dot.gov", ipAddress: "229.183.132.150")
-        expect: true
+        when:
+        assertThat(firstPerson.id).isEqualTo(1)
+        assertThat(firstPerson.firstName).isEqualTo("Skippy")
+        assertThat(firstPerson.lastName).isEqualTo("Rayne")
+        assertThat(firstPerson.email).isEqualTo("srayne0@dot.gov")
+        assertThat(firstPerson.ipAddress).isEqualTo("229.183.132.150")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "test first person in one go"() {
         given:
         def expected = new Person(id: 1, firstName: "Skippy", lastName: "Rayne",
                 email: "srayne0@dot.gov", ipAddress: "229.183.132.150")
-        expect: true
+
+        when:
+        assertThat(firstPerson)
+            .usingRecursiveComparison()
+            .ignoringFields("birthday")
+            .isEqualTo(expected)
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "test first person partially"() {
-        given:
-        def expected = new Person(id: 1, firstName: "Skippy", lastName: "Rayne")
-        expect: true
+        when:
+        assertThat(firstPerson)
+            .hasFieldOrPropertyWithValue("id", 1)
+            .hasFieldOrPropertyWithValue("firstName", "Skippy")
+            .hasFieldOrPropertyWithValue("lastName", "Rayne")
+
+        then:
+        noExceptionThrown()
     }
 
-    @Ignore
     def "getPerson should throw an exception"() {
-        expect: true
+        when:
+        first.getPerson()
+
+        then:
+        def e = thrown(NullPointerException)
+        e.message == "oops"
     }
 }
