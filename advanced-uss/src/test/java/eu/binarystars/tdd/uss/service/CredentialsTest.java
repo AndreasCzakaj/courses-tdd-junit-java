@@ -4,6 +4,7 @@ import eu.binarystars.tdd.uss.Credentials;
 import eu.binarystars.tdd.uss.UssValidator;
 import eu.binarystars.tdd.uss.ValidationException;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -19,6 +20,9 @@ public class CredentialsTest {
 
     UssValidator validator;
 
+    static String validEmail = "test@acme.com";
+    static String validPassword = "aB345678";
+
     @BeforeEach
     void setUp() {
         validator = new UssValidator();
@@ -26,10 +30,25 @@ public class CredentialsTest {
 
     static Credentials createValidCredentials() {
         return Credentials.builder()
-                .email("test@acme.com")
-                .password("aB345678")
+                .email(validEmail)
+                .password(validPassword)
                 .build();
     }
+
+
+    @Disabled("ToDo")
+    void shouldFailForEmail(String email) {}
+
+    @Disabled("ToDo")
+    void shouldPassForEmail(String email) {}
+
+
+    @Disabled("ToDo")
+    void shouldFailForPassword(String password) {}
+
+    @Disabled("ToDo")
+    void shouldPAssForPassword(String password) {}
+
 
     void shouldFailForField(Object object, String reason, String fieldName) {
         ValidationException error = assertThrows(ValidationException.class, () -> validator.validate(object));

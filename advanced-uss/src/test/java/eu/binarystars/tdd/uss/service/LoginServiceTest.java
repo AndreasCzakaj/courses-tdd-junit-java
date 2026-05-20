@@ -16,17 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class LoginServiceTest {
     public static final String EXISTING_EMAIL = "existing@test.com";
     public static final String EXISTING_PASSWORD = "aBC321654";
-    GenericDaoMapImpl<String, User> userDao;
+    //GenericDaoMapImpl<String, User> userDao;
     LoginService service;
 
     @BeforeEach
     void beforeEach() {
-        userDao = new GenericDaoMapImpl<>(User::getEmail);
+        /*userDao = new GenericDaoMapImpl<>(User::getEmail);
         userDao.repo.put(EXISTING_EMAIL, User.builder()
                         .id("x")
                         .email(EXISTING_EMAIL)
                         .passwordHash(EXISTING_PASSWORD)
-                .build());
+                .build());*/
     }
 
     @Test
