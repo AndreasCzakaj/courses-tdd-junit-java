@@ -101,10 +101,11 @@ class LoginServiceTest {
 
     @Test
     void itThrowServerErrorOnDbErrorViaMocks() {
-        GenericDao dao = mock(GenericDao.class);
+        @SuppressWarnings("unchecked")
+        GenericDao<String, User> dao = mock(GenericDao.class);
         when(dao.get(any())).thenThrow(new DaoException("db error"));
-        
-        service = new LoginService(userDao);
+
+        service = new LoginService(dao);
 
         Credentials credentials = Credentials.builder()
                 .email(EXISTING_EMAIL)
