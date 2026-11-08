@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!-- Deliberately small: the pipeline should fail for complexity, not for formatting. -->
+<module name="Checker">
+    <module name="TreeWalker">
+        <!-- CCN > 5 => RED, see "Side Note: CCN" -->
+        <module name="CyclomaticComplexity">
+            <property name="max" value="5"/>
+            <property name="switchBlockAsSingleDecisionPoint" value="true"/>
+        </module>
+        <module name="NestedIfDepth">
+            <property name="max" value="2"/>
+        </module>
+        <module name="EmptyCatchBlock"/>
+    </module>
+</module>

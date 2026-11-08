@@ -1,0 +1,70 @@
+# Pipeline as code: lint => test => package
+# Every job runs the same Maven commands you can run locally, see README of each module.
+
+stages:
+  - lint
+  - test
+  - package
+
+default:
+  image: maven:3.9-eclipse-temurin-21
+
+variables:
+  # keep downloaded dependencies inside the project dir, so the cache can pick them up
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --no-transfer-progress"
+
+cache:
+  key: maven
+  paths:
+    - .m2/repository
+
+# coding conventions & complexity: CCN <= 5, see config/checkstyle.xml
+lint:
+  stage: lint
+  parallel:
+    matrix:
+      - MODULE: [basic, advanced-uss, legacy-uss]
+  script:
+    - mvn $MAVEN_CLI_OPTS -f $MODULE/pom.xml checkstyle:check
+
+# all tests + JaCoCo coverage check (>= 90% lines)
+test:
+  stage: test
+  parallel:
+    matrix:
+      - MODULE: [basic, advanced-uss, legacy-uss]
+  script:
+    - mvn $MAVEN_CLI_OPTS -f $MODULE/pom.xml verify
+    - grep -o 'Total[^%]*%' $MODULE/target/site/jacoco/index.html   # coverage into the job log
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  artifacts:
+    when: always
+    reports:
+      junit: $MODULE/target/surefire-reports/TEST-*.xml
+      coverage_report:
+        coverage_format: jacoco
+        path: $MODULE/target/site/jacoco/jacoco.xml
+
+# the Spock variant: tests only
+test-groovy:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS -f basic-groovy/pom.xml test
+  artifacts:
+    when: always
+    reports:
+      junit: basic-groovy/target/surefire-reports/TEST-*.xml
+
+# the release artifacts: build once, deploy many times
+package:
+  stage: package
+  parallel:
+    matrix:
+      - MODULE: [advanced-uss, legacy-uss]
+  script:
+    - mvn $MAVEN_CLI_OPTS -f $MODULE/pom.xml package -DskipTests
+  artifacts:
+    paths:
+      - $MODULE/target/*.jar
+    expire_in: 1 week
