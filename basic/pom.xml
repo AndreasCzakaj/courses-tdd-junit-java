@@ -16,6 +16,7 @@
         <junit.version>5.9.3</junit.version>
         <jackson.version>2.15.2</jackson.version>
         <lombok.version>1.18.34</lombok.version>
+        <mockito.version>5.17.0</mockito.version>
     </properties>
 
     <dependencies>
@@ -80,15 +81,44 @@
             <version>3.2.7</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- sets the property ${org.mockito:mockito-core:jar} for the Mockito agent -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Maven Surefire Plugin for running tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
+                <configuration>
+                    <!-- Mockito as agent instead of self-attaching (JDK 21+ warning) -->
+                    <argLine>-javaagent:${org.mockito:mockito-core:jar}</argLine>
+                </configuration>
             </plugin>
             <!--plugin>
                 <groupId>org.apache.maven.plugins</groupId>
