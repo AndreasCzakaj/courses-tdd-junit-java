@@ -9,19 +9,19 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 class ObjectMatchersTest {
-    First first;
+    PersonSamples samples;
     Person[] people;
     Person firstPerson;
 
     @BeforeEach
     void setUp() throws Exception {
-        first = new First();
-        people = first.getPeople();
+        samples = new PersonSamples();
+        people = samples.getPeople();
         firstPerson = people[0];
     }
 
     @Test
-    void shouldContain_1000_people() throws Exception{
+    void peopleShouldContain_1000_people() throws Exception{
         assertThat(people).hasSize(1000);
     }
 
@@ -92,13 +92,13 @@ class ObjectMatchersTest {
     }
 
     @Test
-    void testThrowsException() {
+    void testGetPersonThrowsException() {
         // variant 1
-        var error = assertThrowsExactly(NullPointerException.class, () -> first.getPerson());
+        var error = assertThrowsExactly(NullPointerException.class, () -> samples.getPerson());
         assertThat(error.getMessage()).isEqualTo("oops");
 
         // variant 2
-        assertThatThrownBy(() -> first.getPerson())
+        assertThatThrownBy(() -> samples.getPerson())
                 .isExactlyInstanceOf(NullPointerException.class)
                 .hasMessage("oops");
     }

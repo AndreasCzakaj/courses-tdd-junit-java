@@ -8,13 +8,13 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class StringMatchersTest {
 
-    First first;
+    StringSamples samples;
     String email;
 
     @BeforeEach
     void setUp() {
-        first = new First();
-        email = first.getEmail();
+        samples = new StringSamples();
+        email = samples.getEmail();
     }
 
     @Test
@@ -45,6 +45,11 @@ class StringMatchersTest {
     @Test
     void shouldContain_binary() throws Exception{
         assertThat(email).contains("binary");
+    }
+
+    @Test
+    void shouldContain_andreas_and_stars() throws Exception{
+        assertThat(email).contains("andreas", "stars");
     }
 
     @Test

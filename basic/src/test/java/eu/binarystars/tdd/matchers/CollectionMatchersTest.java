@@ -16,9 +16,9 @@ class CollectionMatchersTest {
 
     @BeforeEach
     void setUp() {
-        var first = new First();
-        list = first.getList();
-        map = first.map;
+        var samples = new CollectionSamples();
+        list = samples.getList();
+        map = samples.getMap();
     }
 
     @Test

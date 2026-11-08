@@ -34,7 +34,7 @@ class FilesTest {
     }
 
     @Test
-    void txtFile() throws Throwable {
+    void txtFileShouldExistAndContainFirstAndSecondLine() throws Throwable {
         assertThat(newFile).exists();
         assertThat(newFile).content(StandardCharsets.UTF_8).contains("The first line");
         assertThat(newFile).content(StandardCharsets.UTF_8).contains("The second line");
