@@ -9,13 +9,13 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 class StringMatchersTest {
 
-    First first;
+    StringSamples samples;
     String email;
 
     @BeforeEach
     void setUp() {
-        first = new First();
-        email = first.getEmail();
+        samples = new StringSamples();
+        email = samples.getEmail();
     }
 
     @Test

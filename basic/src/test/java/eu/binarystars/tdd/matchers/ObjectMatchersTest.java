@@ -10,14 +10,14 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 class ObjectMatchersTest {
-    First first;
+    PersonSamples samples;
     Person[] people;
     Person firstPerson;
 
     @BeforeEach
     void setUp() throws Exception {
-        first = new First();
-        people = first.getPeople();
+        samples = new PersonSamples();
+        people = samples.getPeople();
         firstPerson = people[0];
     }
 
