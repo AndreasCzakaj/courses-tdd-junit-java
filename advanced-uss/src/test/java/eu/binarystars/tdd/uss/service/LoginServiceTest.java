@@ -2,6 +2,7 @@ package eu.binarystars.tdd.uss.service;
 
 import eu.binarystars.tdd.uss.*;
 import eu.binarystars.tdd.utils.DaoException;
+import eu.binarystars.tdd.utils.GenericDao;
 import eu.binarystars.tdd.utils.GenericDaoMapImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,10 +12,15 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class LoginServiceTest {
+    public static final String EXISTING_USER_ID = "x";
     public static final String EXISTING_EMAIL = "existing@test.com";
     public static final String EXISTING_PASSWORD = "aBC321654";
+    public static final String UNKNOWN_EMAIL = "i_do_not_exist@test.com";
     GenericDaoMapImpl<String, User> userDao;
     LoginService service;
 
@@ -22,7 +28,7 @@ class LoginServiceTest {
     void beforeEach() {
         userDao = new GenericDaoMapImpl<>(user -> user.getEmail());
         userDao.repo.put(EXISTING_EMAIL, User.builder()
-                        .id("x")
+                        .id(EXISTING_USER_ID)
                         .email(EXISTING_EMAIL)
                         .passwordHash(EXISTING_PASSWORD)
                 .build());
@@ -46,7 +52,7 @@ class LoginServiceTest {
     void itShouldThrowErrorForNonExistingUser() {
         // given
         Credentials credentials = Credentials.builder()
-                .email("i_do_not_exist@test.com")
+                .email(UNKNOWN_EMAIL)
                 .password(EXISTING_PASSWORD)
                 .build();
 
@@ -74,10 +80,30 @@ class LoginServiceTest {
     @Test
     void itThrowServerErrorOnDbError() {
         userDao = new GenericDaoMapImpl<>(User::getEmail) {
+            @Override
             public Optional<User> get(String key) throws DaoException {
                 throw new DaoException("db error");
             }
         };
+        service = new LoginService(userDao);
+
+        Credentials credentials = Credentials.builder()
+                .email(EXISTING_EMAIL)
+                .password(EXISTING_PASSWORD)
+                .build();
+
+
+        // then
+        assertThatThrownBy(() -> service.login(credentials))
+                .isExactlyInstanceOf(ServerException.class)
+                .hasMessage("db error");
+    }
+
+    @Test
+    void itThrowServerErrorOnDbErrorViaMocks() {
+        GenericDao dao = mock(GenericDao.class);
+        when(dao.get(any())).thenThrow(new DaoException("db error"));
+        
         service = new LoginService(userDao);
 
         Credentials credentials = Credentials.builder()
@@ -104,7 +130,7 @@ class LoginServiceTest {
 
         assertThat(actual).usingRecursiveComparison().isEqualTo(
                 Session.builder()
-                        .userId("x")
+                        .userId(EXISTING_USER_ID)
                         .build()
         );
     }
