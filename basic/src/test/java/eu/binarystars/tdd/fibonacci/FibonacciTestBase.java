@@ -45,7 +45,7 @@ abstract class FibonacciTestBase {
                 arguments(6, 8),
                 arguments(10, 55),
                 arguments(20, 6_765),
-                arguments(19, 4181),
+                arguments(19, 4_181),
                 arguments(30, 832_040)
                 //arguments(40, 102_334_155)
                 //arguments(46, 1_836_311_903)

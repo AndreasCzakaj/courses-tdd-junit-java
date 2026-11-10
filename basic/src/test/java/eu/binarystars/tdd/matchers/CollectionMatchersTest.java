@@ -8,6 +8,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class CollectionMatchersTest {
 
@@ -62,6 +63,7 @@ class CollectionMatchersTest {
                 .containsValue("v2")
                 .doesNotContainValue("yyy")
                 .contains(entry("k2", "v2"))
+                .containsEntry("k2", "v2")
         ;
     }
 }
